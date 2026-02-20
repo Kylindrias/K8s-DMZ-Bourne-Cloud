@@ -1,49 +1,49 @@
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: nginx-test-cert
-  namespace: nginx-test
-spec:
-  secretName: https-nginx-test
-  issuerRef:
-    name: letsencrypt-cloudflare
-    kind: ClusterIssuer
-  dnsNames:
-    - nginx-test.bourne.cloud
----
-# HTTP → HTTPS redirect
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: nginx-test-http
-  namespace: nginx-test
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Host(`nginx-test.bourne.cloud`)
-      kind: Rule
-      middlewares:
-        - name: redirect-to-https
-          namespace: traefik
-      services:
-        - name: nginx-test-web
-          port: 80
----
-# HTTPS route
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: nginx-test-https
-  namespace: nginx-test
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`nginx-test.bourne.cloud`)
-      kind: Rule
-      services:
-        - name: nginx-test-web
-          port: 80
-  tls:
-    secretName: https-nginx-test
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: nginx-test-cert
+#   namespace: nginx-test
+# spec:
+#   secretName: https-nginx-test
+#   issuerRef:
+#     name: letsencrypt-cloudflare
+#     kind: ClusterIssuer
+#   dnsNames:
+#     - nginx-test.bourne.cloud
+# ---
+# # HTTP → HTTPS redirect
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: nginx-test-http
+#   namespace: nginx-test
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#     - match: Host(`nginx-test.bourne.cloud`)
+#       kind: Rule
+#       middlewares:
+#         - name: redirect-to-https
+#           namespace: traefik
+#       services:
+#         - name: nginx-test-web
+#           port: 80
+# ---
+# # HTTPS route
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: nginx-test-https
+#   namespace: nginx-test
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`nginx-test.bourne.cloud`)
+#       kind: Rule
+#       services:
+#         - name: nginx-test-web
+#           port: 80
+#   tls:
+#     secretName: https-nginx-test
