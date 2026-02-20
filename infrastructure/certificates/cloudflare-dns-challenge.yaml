@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-cloudflare
+spec:
+  acme:
+    email: pyroteq@hotmail.com 
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-cloudflare-key
+    solvers:
+      - dns01:
+          cloudflare:
+            email: pyroteq@hotmail.com
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: token
+        selector:
+          dnsZones:
+            - "bourne.cloud"

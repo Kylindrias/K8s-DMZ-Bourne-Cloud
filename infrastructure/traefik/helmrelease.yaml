@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: traefik
+      version: "23.2.0"   # pick a stable version
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+  values:
+    globalArguments:
+      - "--providers.kubernetesingress"
+      - "--providers.kubernetescrd.allowCrossNamespace=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+    deployment:
+      kind: DaemonSet
+      hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
+    ports:
+      web:
+        port: 80
+        hostPort: 80
+        protocol: TCP
+      websecure:
+        port: 443
+        hostPort: 443
+        protocol: TCP
+      traefik:
+        port: 9000
+        hostPort: 9000
+        protocol: TCP
+    persistence: {}
+    service:
+      enabled: true
+      type: ClusterIP
+    certificatesResolvers: {}
+    env: []
