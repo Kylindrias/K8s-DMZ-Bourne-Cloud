@@ -1,0 +1,6 @@
+# Never commit these
+kubeconfig
+*.talosconfig
+**/talos/**
+**/*.agekey
+**/.env
