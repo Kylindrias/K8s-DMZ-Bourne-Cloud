@@ -16,6 +16,7 @@ spec:
   values:
     globalArguments:
       - "--providers.kubernetesingress"
+      - "--providers.kubernetesingress.ingressclass=traefik"
       - "--providers.kubernetescrd.allowCrossNamespace=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
