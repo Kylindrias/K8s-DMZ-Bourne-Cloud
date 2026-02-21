@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
  - redirecttohttps.yaml
  - insecuretransport.yaml
+ - upgrade-insecure.yaml
