@@ -20,6 +20,7 @@ spec:
       - "--providers.kubernetescrd.allowCrossNamespace=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.rtmp.address=:1935"
     deployment:
       kind: DaemonSet
       hostNetwork: true
@@ -36,6 +37,10 @@ spec:
       traefik:
         port: 9000
         hostPort: 9000
+        protocol: TCP
+      rtmp:
+        port: 1935
+        hostPort: 1935
         protocol: TCP
     persistence: {}
     service:
