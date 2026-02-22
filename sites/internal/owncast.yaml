@@ -1,0 +1,70 @@
+---
+# cert-manager Certificate — Traefik will serve this via the TLS entrypoint
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: owncast-tls
+  namespace: owncast
+spec:
+  secretName: owncast-tls
+  issuerRef:
+    name: letsencrypt-prod   # Change to match your ClusterIssuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - stream.example.com     # Change to your domain
+
+---
+# Redirect HTTP -> HTTPS using existing middleware in the traefik namespace
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: owncast-http
+  namespace: owncast
+spec:
+  entryPoints:
+    - web                    # HTTP (port 80)
+  routes:
+    - match: Host(`owncast.bourne.cloud`)   # Change to your domain
+      kind: Rule
+      middlewares:
+        - name: redirect-to-https
+          namespace: traefik
+      services:
+        - name: owncast
+          port: 80
+
+---
+# HTTPS IngressRoute
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: owncast-https
+  namespace: owncast
+spec:
+  entryPoints:
+    - websecure              # HTTPS (port 443)
+  routes:
+    - match: Host(`owncast.bourne.cloud`)   # Change to your domain
+      kind: Rule
+      services:
+        - name: owncast
+          port: 80
+  tls:
+    secretName: owncast-tls  # Matches the Certificate secretName above
+
+---
+# TCP IngressRoute for RTMP (port 1935)
+# Requires a dedicated Traefik entrypoint for port 1935 — see notes below
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: owncast-rtmp
+  namespace: owncast
+spec:
+  entryPoints:
+    - rtmp                   # Must define this entrypoint in your Traefik Helm values
+  routes:
+    - match: HostSNI(`*`)   # TCP passthrough — matches all (no SNI on RTMP)
+      services:
+        - name: owncast
+          port: 1935
