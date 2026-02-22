@@ -8,7 +8,7 @@ metadata:
 spec:
   secretName: owncast-tls
   issuerRef:
-    name: letsencrypt-prod   # Change to match your ClusterIssuer name
+    name: letsencrypt-cloudflare   # Change to match your ClusterIssuer name
     kind: ClusterIssuer
   dnsNames:
     - owncast.bourne.cloud     # Change to your domain
