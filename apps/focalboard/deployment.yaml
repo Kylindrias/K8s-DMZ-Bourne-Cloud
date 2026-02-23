@@ -18,6 +18,9 @@ spec:
       containers:
         - name: focalboard
           image: mattermost/focalboard:latest
+          env:
+            - name: FOCALBOARD_PORT
+              value: "8000"
           ports:
             - containerPort: 8000
           volumeMounts:
