@@ -24,6 +24,10 @@ spec:
     deployment:
       kind: DaemonSet
       hostNetwork: true
+      updateStrategy:
+        rollingUpdate:
+          maxSurge: 0
+          maxUnavailable: 1
     dnsPolicy: ClusterFirstWithHostNet
     ports:
       web:
