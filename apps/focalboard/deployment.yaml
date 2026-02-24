@@ -37,3 +37,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: focalboard-data
+        - name: config
+          configMap:
+            name: focalboard-config
