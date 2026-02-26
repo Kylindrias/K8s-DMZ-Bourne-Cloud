@@ -1,13 +1,12 @@
-# CHANGE TO LONGHORN
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: owncast-data
-#   namespace: owncast
-# spec:
-#   accessModes:
-#     - ReadWriteMany
-#   resources:
-#     requests:
-#       storage: 10Gi
-#   storageClassName: nfs-csi
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: owncast-data
+  namespace: owncast
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: longhorn
