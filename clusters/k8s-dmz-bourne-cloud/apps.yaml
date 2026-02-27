@@ -11,6 +11,6 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: storage
+    - name: pvcs
     - name: secrets
     - name: repos
