@@ -1,0 +1,4 @@
+# Includes Xen-Tools, Linux Utils, SCSI, Secure Boot
+machine:
+  install:
+    image: factory.talos.dev/metal-installer-secureboot/58eedd04d458e2c900727f5a3af74a3ef6453b9902b23decb590c0007388187a:v1.12.4
