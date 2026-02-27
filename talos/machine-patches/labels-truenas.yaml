@@ -1,0 +1,5 @@
+machine:
+  nodeLabels:
+    hypervisor: TrueNAS
+    networkZone: DMZ
+    role: Control-Plane

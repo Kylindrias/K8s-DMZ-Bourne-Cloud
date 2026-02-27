@@ -1,0 +1,5 @@
+machine:
+  nodeLabels:
+    hypervisor: XCP-NG
+    networkZone: DMZ
+    role: Control-Plane

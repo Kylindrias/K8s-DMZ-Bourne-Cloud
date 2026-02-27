@@ -16,6 +16,4 @@ spec:
   # Turn off default disk
   values:
     defaultSettings:
-      defaultDiskPath: "" # Disable auto-created default disk.
-  # defaultBackupStore: < Wrong according to Claude.AI
       backupTarget: nfs://192.168.1.10:/mnt/storage-zfs/k8s-longhorn-backup
