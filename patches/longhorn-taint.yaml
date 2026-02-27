@@ -1,4 +1,0 @@
-machine:
-  kubelet:
-    extraArgs:
-      register-with-taints: "storage=longhorn:NoSchedule"
