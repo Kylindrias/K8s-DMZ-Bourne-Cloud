@@ -3,3 +3,5 @@ machine:
     hypervisor: XCP-NG-01
     networkZone: DMZ
     role: Control-Plane
+    longhorn.storage: "true"
+    node.longhorn.io/create-default-disk: "true"
