@@ -1,3 +1,4 @@
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: talos-dmz-03
+auto: off
